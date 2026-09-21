@@ -1,0 +1,613 @@
+/* ============================================================
+   MandiSetu — Blush & Charcoal Design System
+   Palette: Paper #FFF5F5 · Band #F7D6D0 · Accent #E2B4BD
+            Charcoal #4A4A4A · Dark #2F2C2D
+            Olive #6B7A55 · Rose #A3495D
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap');
+
+:root {
+  /* ── Core Palette ── */
+  --paper:       #FFF5F5;   /* page background */
+  --band:        #F7D6D0;   /* strips, headers, selected chips */
+  --accent:      #E2B4BD;   /* nav underline, focus ring, P50 line, certificate edge */
+  --charcoal:    #4A4A4A;   /* body text, buttons, panels */
+  --dark:        #2F2C2D;   /* headings, strong emphasis */
+  --white:       #FFFFFF;   /* surface whites */
+
+  /* ── Functional: Price Data ── */
+  --olive:       #6B7A55;   /* price rise, Sold/Resolved/Verified */
+  --olive-bg:    #EFF2EA;
+  --rose:        #A3495D;   /* price fall, Disputed/Rejected */
+  --rose-bg:     #F9ECF0;
+
+  /* ── Derived Tones ── */
+  --charcoal-soft: #6B6869; /* secondary text, muted labels */
+  --rule:          rgba(74, 74, 74, 0.14);  /* hairline rules */
+  --rule-mid:      rgba(74, 74, 74, 0.25);
+
+  /* ── Typography ── */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-deva:    'Tiro Devanagari Hindi', 'Mukta', serif;
+
+  /* ── Shape ── */
+  --radius-sm:  2px;
+  --radius-md:  3px;
+  --radius-lg:  4px;
+
+  /* ── Shadows (minimal) ── */
+  --shadow-float: 0 4px 20px rgba(47, 44, 45, 0.12), 0 1px 4px rgba(47, 44, 45, 0.06);
+  --shadow-modal: 0 8px 32px rgba(47, 44, 45, 0.16), 0 2px 8px rgba(47, 44, 45, 0.08);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--charcoal);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* ── Devanagari script sizing ── */
+:lang(mr), :lang(hi),
+.deva {
+  font-family: var(--font-deva);
+  font-size: 1.05em;
+  line-height: 1.7;
+}
+
+/* ── Fraunces display headings ── */
+.display,
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--dark);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ── Tabular figures for price columns ── */
+.tabular-nums,
+.price {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  font-family: var(--font-display);
+}
+
+/* ── Links ── */
+a {
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--dark); }
+
+/* ── Buttons base reset ── */
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  line-height: 1;
+}
+
+/* ── Form elements ── */
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size: inherit;
+  color: var(--charcoal);
+}
+
+/* ============================================================
+   BUTTON SYSTEM
+   ============================================================ */
+
+/* Primary — filled charcoal */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--charcoal);
+  color: var(--paper);
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid var(--dark);
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background: var(--dark);
+}
+
+/* Secondary — charcoal outline */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--white);
+  color: var(--charcoal);
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px solid var(--rule-mid);
+  transition: background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+.btn-secondary:hover {
+  background: var(--band);
+  border-color: var(--accent);
+}
+
+/* Ghost — text only */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--charcoal-soft);
+  padding: 8px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border: none;
+  transition: color 0.15s ease;
+}
+.btn-ghost:hover { color: var(--charcoal); }
+
+/* Danger — deep rose outline */
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--white);
+  color: var(--rose);
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid var(--rose);
+  transition: background 0.15s ease;
+}
+.btn-danger:hover {
+  background: var(--rose-bg);
+}
+
+/* ============================================================
+   FORM CONTROLS
+   ============================================================ */
+
+.gov-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 5px;
+  letter-spacing: 0.01em;
+}
+
+.gov-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--white);
+  border: 1px solid var(--rule-mid);
+  border-radius: var(--radius-sm);
+  color: var(--charcoal);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  min-height: 42px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+}
+
+.gov-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2.5px rgba(226, 180, 189, 0.4);
+}
+
+.gov-input::placeholder {
+  color: var(--charcoal-soft);
+  opacity: 0.75;
+}
+
+select.gov-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='none' stroke='%234A4A4A' stroke-width='1.5' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+/* ============================================================
+   STATUS BADGES
+   ============================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+}
+
+/* Olive: Sold / Resolved / Verified */
+.badge-olive, .badge-green {
+  background: var(--olive-bg);
+  color: var(--olive);
+  border: 1px solid rgba(107, 122, 85, 0.3);
+}
+
+/* Rose: Disputed / Rejected */
+.badge-rose, .badge-red {
+  background: var(--rose-bg);
+  color: var(--rose);
+  border: 1px solid rgba(163, 73, 93, 0.3);
+}
+
+/* Charcoal outline: Draft */
+.badge-neutral {
+  background: transparent;
+  color: var(--charcoal);
+  border: 1px solid var(--rule-mid);
+}
+
+/* Blush fill: Listed / Under Review */
+.badge-band, .badge-ochre, .badge-blue {
+  background: var(--band);
+  color: var(--dark);
+  border: 1px solid var(--accent);
+}
+
+/* Live indicator with pulsing dot */
+.badge-live {
+  background: var(--band);
+  color: var(--dark);
+  border: 1px solid var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.badge-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: live-pulse 2s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ============================================================
+   TABLE SYSTEM
+   ============================================================ */
+
+.mandi-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  font-size: 0.9rem;
+}
+
+.mandi-table th {
+  background: var(--band);
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--accent);
+  white-space: nowrap;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.mandi-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: middle;
+  color: var(--charcoal);
+}
+
+.mandi-table tr:hover td {
+  background: rgba(247, 214, 208, 0.25);
+}
+
+.mandi-table .modal-price-cell {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Below-MSP row accent */
+.mandi-table tr.below-msp td:first-child {
+  border-left: 3px solid var(--rose);
+}
+
+/* ============================================================
+   MODAL SYSTEM
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 44, 45, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background: var(--white);
+  border: 1px solid var(--rule-mid);
+  border-radius: var(--radius-md);
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-modal);
+}
+
+.modal-header {
+  background: var(--band);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+/* ============================================================
+   SEGMENTED CONTROLS
+   ============================================================ */
+
+.seg-control {
+  display: inline-flex;
+  border: 1px solid var(--rule-mid);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--white);
+}
+
+.seg-control button {
+  padding: 6px 14px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--charcoal-soft);
+  border-right: 1px solid var(--rule-mid);
+  background: transparent;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.seg-control button:last-child {
+  border-right: none;
+}
+
+.seg-control button.active {
+  background: var(--charcoal);
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.seg-control button:not(.active):hover {
+  background: var(--band);
+  color: var(--dark);
+}
+
+/* ============================================================
+   CARD / PANEL SYSTEM
+   ============================================================ */
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+}
+
+.card-band {
+  background: var(--band);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+
+/* Verdict card — charcoal filled */
+.card-verdict {
+  background: var(--charcoal);
+  color: var(--paper);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.card-verdict .verdict-headline {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--paper);
+  line-height: 1.15;
+}
+
+.card-verdict .verdict-reason {
+  font-size: 1.05rem;
+  color: rgba(255, 245, 245, 0.85);
+  margin-top: 8px;
+  line-height: 1.55;
+}
+
+.card-verdict .verdict-net {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   TIMELINE SYSTEM
+   ============================================================ */
+
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--rule-mid);
+}
+
+.timeline-node {
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-node.done {
+  background: var(--charcoal);
+  border: 2px solid var(--charcoal);
+}
+
+.timeline-node.current {
+  background: var(--white);
+  border: 2.5px solid var(--accent);
+  animation: node-pulse 2.5s ease-in-out infinite;
+}
+
+.timeline-node.pending {
+  background: var(--white);
+  border: 1px solid var(--rule-mid);
+}
+
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(226, 180, 189, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(226, 180, 189, 0); }
+}
+
+/* ============================================================
+   HAIRLINE UTILITIES
+   ============================================================ */
+
+.hr {
+  height: 1px;
+  background: var(--rule);
+  border: none;
+  margin: 0;
+}
+
+.hr-mid {
+  height: 1px;
+  background: var(--rule-mid);
+  border: none;
+  margin: 0;
+}
+
+.hr-accent {
+  height: 1px;
+  background: var(--accent);
+  border: none;
+  margin: 0;
+}
+
+/* ============================================================
+   FOCUS RING (global)
+   ============================================================ */
+
+:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--band);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+/* ============================================================
+   RESPONSIVE UTILITIES
+   ============================================================ */
+
+.hide-mobile {
+  display: inline;
+}
+
+.show-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none; }
+  .show-mobile-only { display: inline-flex; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
