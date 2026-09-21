@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Bell, LogOut, UserCheck, Menu, X, Database, ChevronDown } from 'lucide-react';
+import { Bell, LogOut, LogIn, Menu, X, Database } from 'lucide-react';
 import { Language } from '../types';
 
 export const Header: React.FC = () => {
   const {
     user,
+    isLoggedIn,
     language,
     setLanguage,
     t,
@@ -105,7 +106,7 @@ export const Header: React.FC = () => {
               }} />
             </div>
             <div style={{ fontSize: '0.73rem', color: 'var(--charcoal-soft)', letterSpacing: '0.02em' }}>
-              मंडी सेतू · SIH26132
+              {t.appName} · SIH26132
             </div>
           </div>
         </div>
@@ -263,54 +264,47 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          {/* User avatar + role */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            paddingLeft: 6,
-            borderLeft: '1px solid var(--rule-mid)',
-            marginLeft: 2
-          }}>
-            <div style={{
-              width: 32,
-              height: 32,
-              background: 'var(--charcoal)',
-              color: 'var(--paper)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '0.8rem',
-              fontWeight: 700,
-              fontFamily: 'var(--font-display)',
-              flexShrink: 0
-            }}>
-              {user.name.charAt(0)}
-            </div>
-            <div style={{ lineHeight: 1.2, display: 'none' }} className="hide-mobile">
-              <div style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--dark)' }}>
-                {user.name}
+          {/* User avatar / Sign-in button */}
+          {isLoggedIn ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingLeft: 6, borderLeft: '1px solid var(--rule-mid)', marginLeft: 2 }}>
+              {/* Avatar */}
+              <div style={{
+                width: 32,
+                height: 32,
+                background: 'var(--charcoal)',
+                color: 'var(--paper)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                fontFamily: 'var(--font-display)',
+                flexShrink: 0
+              }}>
+                {user.name.charAt(0)}
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--charcoal-soft)' }}>
-                {user.role === 'farmer' ? t.roleFarmer
-                  : user.role === 'fpo' ? t.roleFpo
-                  : user.role === 'buyer' ? t.roleBuyer
-                  : t.roleOfficer}
+              <div className="hide-mobile" style={{ lineHeight: 1.2 }}>
+                <div style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--dark)' }}>{user.name.split('(')[0].trim()}</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--charcoal-soft)' }}>
+                  {user.role === 'farmer' ? t.roleFarmer : user.role === 'fpo' ? t.roleFpo : user.role === 'buyer' ? t.roleBuyer : t.roleOfficer}
+                </div>
               </div>
+              <button onClick={logout} className="btn-ghost hide-mobile" style={{ padding: '6px 10px', fontSize: '0.82rem' }} title={t.signOut}>
+                <LogOut size={14} />
+                <span>{t.signOut}</span>
+              </button>
             </div>
-          </div>
-
-          {/* Sign out */}
-          <button
-            onClick={logout}
-            className="btn-ghost hide-mobile"
-            style={{ padding: '6px 10px', fontSize: '0.82rem' }}
-            title={t.signOut}
-          >
-            <LogOut size={14} />
-            <span>{t.signOut}</span>
-          </button>
+          ) : (
+            <button
+              onClick={() => setIsAuthModalOpen(true)}
+              className="btn-primary"
+              style={{ padding: '7px 14px', fontSize: '0.85rem', gap: 6, marginLeft: 4 }}
+            >
+              <LogIn size={14} />
+              <span>Sign In</span>
+            </button>
+          )}
 
           {/* Mobile hamburger */}
           <button

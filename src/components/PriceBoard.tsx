@@ -19,7 +19,7 @@ import {
 import { Commodity, Mandi } from '../types';
 
 export const PriceBoard: React.FC = () => {
-  const { t, setCurrentView } = useApp();
+  const { t, setCurrentView, language } = useApp();
 
   const [selectedCrop, setSelectedCrop] = useState<string>('all');
   const [selectedDistrict, setSelectedDistrict] = useState<string>('all');
@@ -43,8 +43,8 @@ export const PriceBoard: React.FC = () => {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       const commodity = COMMODITIES.find((c) => c.id === obs.commodityId);
-      const matchMandi = mandi.name.toLowerCase().includes(q) || mandi.nameMr.includes(q);
-      const matchCrop = commodity?.nameEn.toLowerCase().includes(q) || commodity?.nameMr.includes(q);
+      const matchMandi = mandi.name.toLowerCase().includes(q) || mandi.nameMr.includes(q) || (mandi.nameHi && mandi.nameHi.includes(q));
+      const matchCrop = commodity?.nameEn.toLowerCase().includes(q) || commodity?.nameMr.includes(q) || (commodity?.nameHi && commodity?.nameHi.includes(q));
       if (!matchMandi && !matchCrop) return false;
     }
     return true;
@@ -71,7 +71,8 @@ export const PriceBoard: React.FC = () => {
   };
 
   const triggerPriceAlert = (mandiName: string, cropName: string, price: number) => {
-    setAlertSuccessMsg(`अलर्ट सेट: ${mandiName} मध्ये ${cropName} भाव ₹${price + 150} ओलांडल्यास SMS येईल.`);
+    const msg = language === 'mr' ? `अलर्ट सेट: ${mandiName} मध्ये ${cropName} भाव ₹${price + 150} ओलांडल्यास SMS येईल.` : language === 'hi' ? `अलर्ट सेट: ${mandiName} में ${cropName} भाव ₹${price + 150} से ऊपर जाने पर SMS आएगा.` : `Alert set: SMS will be sent when ${cropName} at ${mandiName} crosses ₹${price + 150}.`;
+    setAlertSuccessMsg(msg);
     setTimeout(() => setAlertSuccessMsg(null), 4000);
   };
 
@@ -164,7 +165,7 @@ export const PriceBoard: React.FC = () => {
             type="text"
             className="gov-input"
             style={{ paddingLeft: 30, background: 'var(--white)', minHeight: 36, fontSize: '0.86rem' }}
-            placeholder="बाजार समिती किंवा शेतमाल शोधा..."
+            placeholder={language === 'mr' ? 'बाजार समिती किंवा शेतमाल शोधा...' : language === 'hi' ? 'मंडी या फसल खोजें...' : 'Search Mandi or Commodity...'}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -246,10 +247,10 @@ export const PriceBoard: React.FC = () => {
                         <span style={{ fontSize: '1.15rem' }}>{crop.icon}</span>
                         <div>
                           <div style={{ fontWeight: 600, color: 'var(--dark)', fontSize: '0.9rem' }}>
-                            {crop.nameMr}
+                            {language === 'mr' ? crop.nameMr : language === 'hi' ? crop.nameHi : crop.nameEn}
                           </div>
                           <div style={{ fontSize: '0.72rem', color: 'var(--charcoal-soft)' }}>
-                            {crop.nameEn}
+                            {language === 'en' ? crop.nameMr : crop.nameEn}
                           </div>
                         </div>
                       </div>
@@ -258,10 +259,10 @@ export const PriceBoard: React.FC = () => {
                     {/* Mandi */}
                     <td>
                       <div style={{ fontWeight: 600, color: 'var(--dark)', fontSize: '0.9rem' }}>
-                        {mandi.nameMr}
+                        {language === 'mr' ? mandi.nameMr : language === 'hi' ? mandi.nameHi : mandi.name}
                       </div>
                       <div style={{ fontSize: '0.72rem', color: 'var(--charcoal-soft)' }}>
-                        {mandi.districtMr}
+                        {language === 'mr' ? mandi.districtMr : mandi.district}
                       </div>
                     </td>
 
@@ -345,10 +346,10 @@ export const PriceBoard: React.FC = () => {
                           <span className="hide-mobile">{t.viewChart}</span>
                         </button>
                         <button
-                          onClick={() => triggerPriceAlert(mandi.nameMr, crop.nameMr, obs.modalPrice)}
+                          onClick={() => triggerPriceAlert(language === 'en' ? mandi.name : mandi.nameMr, language === 'en' ? crop.nameEn : crop.nameMr, obs.modalPrice)}
                           className="btn-secondary"
                           style={{ padding: '4px 8px', fontSize: '0.76rem' }}
-                          title="अलर्ट सेट करा"
+                          title={language === 'mr' ? 'अलर्ट सेट करा' : language === 'hi' ? 'अलर्ट सेट करें' : 'Set Alert'}
                         >
                           <Bell size={12} />
                         </button>

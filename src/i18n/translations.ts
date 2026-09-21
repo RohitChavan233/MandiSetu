@@ -26,6 +26,7 @@ export interface Translations {
   navCreateLot: string;
   navOffers: string;
   navTransactions: string;
+  navDisputes: string;
   navLogistics: string;
   navOfficerKyc: string;
   navOfficerDisputes: string;
@@ -171,6 +172,7 @@ export const translations: Record<Language, Translations> = {
     navCreateLot: 'नवीन लॉट नोंदवा',
     navOffers: 'खरेदीदार ऑफर्स',
     navTransactions: 'व्यवहार व हमी रक्कम (एस्क्रो)',
+    navDisputes: 'तक्रार निवारण कक्ष',
     navLogistics: 'गोदामे व वाहतूक',
     navOfficerKyc: 'KYC पडताळणी',
     navOfficerDisputes: 'तक्रार निवारण कक्ष',
@@ -309,6 +311,7 @@ export const translations: Record<Language, Translations> = {
     navCreateLot: 'नया लॉट बनाएं',
     navOffers: 'प्राप्त ऑफर्स',
     navTransactions: 'लेनदेन व एस्क्रो खाता',
+    navDisputes: 'विवाद समाधान केंद्र',
     navLogistics: 'शीतगृह एवं परिवहन',
     navOfficerKyc: 'KYC सत्यापन',
     navOfficerDisputes: 'विवाद समाधान केंद्र',
@@ -447,6 +450,7 @@ export const translations: Record<Language, Translations> = {
     navCreateLot: 'Create Graded Lot',
     navOffers: 'Buyer Offers',
     navTransactions: 'Escrow Transactions',
+    navDisputes: 'Dispute Mediation',
     navLogistics: 'Storage & Transport',
     navOfficerKyc: 'KYC Review Desk',
     navOfficerDisputes: 'Dispute Mediation',
